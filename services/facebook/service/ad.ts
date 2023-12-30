@@ -49,7 +49,10 @@ export const createAd = async (
 
 export const getAd = async (ad_ids: string[]) => {
   try {
-    const account = new AdAccount(accountId, FacebookAdsApiInstance);
+    const account = new AdAccount(
+      env.FACEBOOK_ACCOUNT_ID,
+      FacebookAdsApiInstance,
+    );
 
     const fbAds = await Promise.all(
       ad_ids.map(async (id) => {

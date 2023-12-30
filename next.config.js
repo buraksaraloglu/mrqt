@@ -1,4 +1,4 @@
-// FIX: I changed .mjs to .js 
+// FIX: I changed .mjs to .js
 // More info: https://github.com/shadcn-ui/taxonomy/issues/100#issuecomment-1605867844
 
 const { createContentlayerPlugin } = require("next-contentlayer");
@@ -12,19 +12,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
       },
       {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
       },
     ],
   },
+  transpilePackages: ["html-to-text"],
   experimental: {
     serverComponentsExternalPackages: ["@prisma/client"],
   },
-}
+};
 
 const withContentlayer = createContentlayerPlugin({
   // Additional Contentlayer config options
