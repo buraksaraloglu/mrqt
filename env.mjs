@@ -1,5 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs"
-import { z } from "zod"
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
 
 export const env = createEnv({
   server: {
@@ -14,6 +14,8 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1),
     STRIPE_API_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    FACEBOOK_ACCESS_TOKEN: z.string().min(1),
+    FACEBOOK_ACCOUNT_ID: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -34,9 +36,16 @@ export const env = createEnv({
     // Stripe
     STRIPE_API_KEY: process.env.STRIPE_API_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
-    NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID: process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID,
-    NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID: process.env.NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID,
-    NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID: process.env.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID,
-    NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID: process.env.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID,
+    NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID:
+      process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID,
+    NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID:
+      process.env.NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID,
+    NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID:
+      process.env.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID,
+    NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID:
+      process.env.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID,
+
+    FACEBOOK_ACCESS_TOKEN: process.env.FACEBOOK_ACCESS_TOKEN,
+    FACEBOOK_ACCOUNT_ID: process.env.FACEBOOK_ACCOUNT_ID,
   },
-})
+});
