@@ -31,15 +31,9 @@ const rightHeader = () => (
 );
 
 export default async function DocsLayout({ children }: DocsLayoutProps) {
-  const user = await currentUser();
-
   return (
     <div className="flex min-h-screen flex-col">
-      <NavBar
-        user={user}
-        items={docsConfig.mainNav}
-        rightElements={rightHeader()}
-      >
+      <NavBar items={docsConfig.mainNav} rightElements={rightHeader()}>
         <DocsSidebarNav items={docsConfig.sidebarNav} />
       </NavBar>
       <div className="container flex-1">{children}</div>
