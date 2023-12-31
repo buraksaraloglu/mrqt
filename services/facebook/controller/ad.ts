@@ -6,7 +6,7 @@ import { prisma } from "@/lib/db";
 import { AdParams } from "../interfaces";
 import { createAd, getAd } from "../service/ad";
 
-const FacebookAdsApiInstance = FacebookAdsApi.init(env.FACEBOOK_ACCESS_TOKEN);
+const FacebookAdsApiInstance = FacebookAdsApi.init(env.FACEBOOK_CLIENT_SECRET);
 
 interface CreateAdControllerParams {
   ads: AdParams[];

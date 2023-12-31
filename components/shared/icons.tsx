@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   CreditCard,
+  Facebook,
   File,
   FileText,
   HelpCircle,
@@ -72,6 +73,7 @@ export const Icons = {
       />
     </svg>
   ),
+  facebook: ({ ...props }: LucideProps) => <Facebook {...props} />,
   help: HelpCircle,
   laptop: Laptop,
   logo: Puzzle,

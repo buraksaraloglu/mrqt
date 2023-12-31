@@ -1,4 +1,5 @@
-import { getCurrentUser } from "@/lib/session";
+import { currentUser } from "@clerk/nextjs";
+
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PricingCards } from "@/components/pricing-cards";
@@ -9,14 +10,12 @@ export const metadata = {
 };
 
 export default async function PricingPage() {
-  const user = await getCurrentUser();
+  const user = await currentUser();
   let subscriptionPlan;
 
   if (user) {
     subscriptionPlan = await getUserSubscriptionPlan(user.id);
   }
-
-  console.log({ subscriptionPlan });
 
   return (
     <div className="flex w-full flex-col gap-16 py-8 md:py-8">

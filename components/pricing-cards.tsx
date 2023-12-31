@@ -116,13 +116,13 @@ export async function PricingCards({
               {userId && subscriptionPlan ? (
                 offer.title === "Starter" ? (
                   <Link
-                    href="/dashboard"
+                    href="/app"
                     className={buttonVariants({
                       className: "w-full",
                       variant: "default",
                     })}
                   >
-                    Go to dashboard
+                    Go to App
                   </Link>
                 ) : (
                   <BillingFormButton

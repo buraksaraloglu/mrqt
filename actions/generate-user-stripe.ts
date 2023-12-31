@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth-old";
 import { stripe } from "@/lib/stripe";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { absoluteUrl } from "@/lib/utils";
@@ -13,7 +13,7 @@ export type responseAction = {
   stripeUrl?: string;
 };
 
-// const billingUrl = absoluteUrl("/dashboard/billing")
+// const billingUrl = absoluteUrl("/app/billing")
 const billingUrl = absoluteUrl("/pricing");
 
 export async function generateUserStripe(

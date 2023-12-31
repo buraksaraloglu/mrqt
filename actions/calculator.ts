@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth-old";
 import { prisma } from "@/lib/db";
 import { marketingBudgetSchema } from "@/lib/validations/marketing-budget";
 
@@ -43,7 +43,7 @@ export async function calculateBudget(data: FormData) {
     //   },
     // });
 
-    // revalidatePath("/dashboard/settings");
+    // revalidatePath("/app/settings");
 
     const regular = {
       clicks,

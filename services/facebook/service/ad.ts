@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 
 import { AdParams } from "../interfaces";
 
-const FacebookAdsApiInstance = FacebookAdsApi.init(env.FACEBOOK_ACCESS_TOKEN);
+const FacebookAdsApiInstance = FacebookAdsApi.init(env.FACEBOOK_CLIENT_SECRET);
 
 export const createAd = async (
   ad: AdParams & {
@@ -17,7 +17,7 @@ export const createAd = async (
     const { facebookAdSetId, existingAdSetId, ...adParams } = ad;
 
     const account = new AdAccount(
-      env.FACEBOOK_ACCOUNT_ID,
+      env.FACEBOOK_CLIENT_ID,
       FacebookAdsApiInstance,
     );
 
@@ -50,7 +50,7 @@ export const createAd = async (
 export const getAd = async (ad_ids: string[]) => {
   try {
     const account = new AdAccount(
-      env.FACEBOOK_ACCOUNT_ID,
+      env.FACEBOOK_CLIENT_ID,
       FacebookAdsApiInstance,
     );
 

@@ -1,7 +1,4 @@
-import { redirect } from "next/navigation";
-
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
+import { requireUser } from "@/lib/auth";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { BillingInfo } from "@/components/billing-info";
@@ -15,12 +12,7 @@ export const metadata = {
 };
 
 export default async function BillingPage() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login");
-  }
-
+  const user = await requireUser();
   const subscriptionPlan = await getUserSubscriptionPlan(user.id);
 
   return (

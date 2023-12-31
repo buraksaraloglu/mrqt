@@ -1,16 +1,17 @@
 import "@/styles/globals.css";
 
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
-import { Analytics } from "@/components/analytics";
-import { ModalProvider } from "@/components/modal-provider";
-import { Providers } from "@/components/providers";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { Toaster } from "@/components/ui/toaster";
+
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@/components/analytics";
+import { ModalProvider } from "@/components/modal-provider";
+import { InnerProviders, OuterProviders } from "@/components/providers";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const metadata = {
@@ -19,23 +20,13 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "Next.js",
-    "React",
-    "Prisma",
-    "PlanetScale",
-    "Auth.js",
-    "shadcn ui",
-    "Resend",
-    "React Email",
-    "Stripe"
-  ],
+  keywords: [],
   authors: [
     {
-      name: "mickasmt",
+      name: "OKBRK",
     },
   ],
-  creator: "mickasmt",
+  creator: "OKBRK",
   metadataBase: new URL(siteConfig.url),
   openGraph: {
     type: "website",
@@ -50,7 +41,7 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: "@miickasmt",
+    creator: "@okbrk",
   },
   icons: {
     icon: "/favicon.ico",
@@ -58,29 +49,30 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
-}
+};
 
 export default function RootLayout({ children }: RootLayoutProps) {
-
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontUrban.variable,
-          fontHeading.variable
-        )}
-      >
-        <Providers attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Analytics />
-          <Toaster />
-          <ModalProvider />
-          <TailwindIndicator />
-        </Providers>
-      </body>
-    </html>
-  )
+    <OuterProviders>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable,
+            fontUrban.variable,
+            fontHeading.variable,
+          )}
+        >
+          <InnerProviders attribute="class" defaultTheme="system" enableSystem>
+            {children}
+            <Analytics />
+            <Toaster />
+            <ModalProvider />
+            <TailwindIndicator />
+          </InnerProviders>
+        </body>
+      </html>
+    </OuterProviders>
+  );
 }

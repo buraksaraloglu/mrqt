@@ -1,10 +1,5 @@
-import { redirect } from "next/navigation";
-
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
-import { DashboardHeader } from "@/components/dashboard/header";
+import { requireUser } from "@/lib/auth";
 import { CalculatorForm } from "@/components/forms/calculator-form";
-import { UserNameForm } from "@/components/forms/user-name-form";
 
 export const metadata = {
   title: "Calculator",
@@ -12,11 +7,7 @@ export const metadata = {
 };
 
 export default async function CalculatorPage() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login");
-  }
+  const user = await requireUser();
 
   return (
     <div className="flex w-full flex-col gap-8 py-8 md:py-8">
