@@ -7,6 +7,7 @@ import { User } from "@clerk/backend";
 import { FacebookAdAccount } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
+import { useCopyToClipboard } from "@/hooks/use-copy-clipboard";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -54,6 +55,7 @@ function SelectAdAccount({
   defaultSelected?: boolean;
 }) {
   const [selected, setSelected] = useState(() => Boolean(defaultSelected));
+  const [value, copy] = useCopyToClipboard();
 
   const [isPending, startTransition] = useTransition();
   const onSwitch = useCallback(
@@ -98,7 +100,17 @@ function SelectAdAccount({
         <CardHeader>
           <h2 className="text-lg font-bold">{adAccount.name}</h2>
           <div>
-            <Badge>ID: {adAccount.id}</Badge>
+            <Badge
+              className="cursor-pointer"
+              onClick={() => {
+                toast({
+                  title: "Copied to clipboard",
+                });
+                copy(adAccount.id);
+              }}
+            >
+              ID: {adAccount.id}
+            </Badge>
           </div>
         </CardHeader>
         <CardContent className="flex items-center justify-center pt-6">

@@ -1,37 +1,15 @@
-import { getFacebookToken } from "@/services/facebook";
-import { fetchFacebookAdAccounts } from "@/services/facebook/service/ad-account";
+import {
+  fetchUserFacebookAdAccounts,
+  getUserFacebookAdAccounts,
+} from "@/services/facebook/service/ad-account";
 
 import { requireUser } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { Typography } from "@/components/ui/typography";
 import { DashboardContent } from "@/components/dashboard/content";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { ImportFBAdAccountForm } from "@/components/forms/import-fb-ad-account-form";
 import { Icons } from "@/components/shared/icons";
-
-async function fetchUserFacebookAdAccounts(userId: string) {
-  const accessToken = await getFacebookToken(userId);
-  if (!accessToken) return;
-  const facebookAdAccounts = await fetchFacebookAdAccounts(accessToken);
-
-  return facebookAdAccounts;
-}
-
-async function getUserFacebookAdAccounts(userId: string) {
-  try {
-    const adAccounts = await prisma.facebookAdAccount.findMany({
-      where: {
-        userId,
-        isActive: true,
-      },
-    });
-
-    return adAccounts;
-  } catch (error) {
-    return null;
-  }
-}
 
 export default async function AdAccountPage() {
   const user = await requireUser();

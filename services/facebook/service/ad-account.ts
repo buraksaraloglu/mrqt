@@ -1,5 +1,9 @@
 import { AdAccount, FacebookAdsApi, User } from "facebook-nodejs-business-sdk";
 
+import { prisma } from "@/lib/db";
+
+import { getFacebookToken } from "../lib";
+
 export async function whoAmI(accessToken: string): Promise<string | undefined> {
   try {
     const me = await fetch(
@@ -40,5 +44,28 @@ export async function fetchFacebookAdAccounts(
   } catch (error) {
     console.error("Error fetching Facebook ad accounts:", error);
     throw error;
+  }
+}
+
+export async function fetchUserFacebookAdAccounts(userId: string) {
+  const accessToken = await getFacebookToken(userId);
+  if (!accessToken) return;
+  const facebookAdAccounts = await fetchFacebookAdAccounts(accessToken);
+
+  return facebookAdAccounts;
+}
+
+export async function getUserFacebookAdAccounts(userId: string) {
+  try {
+    const adAccounts = await prisma.facebookAdAccount.findMany({
+      where: {
+        userId,
+        isActive: true,
+      },
+    });
+
+    return adAccounts;
+  } catch (error) {
+    return null;
   }
 }
