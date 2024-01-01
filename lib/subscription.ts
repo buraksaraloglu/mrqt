@@ -1,9 +1,12 @@
-// @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
+import { initUser } from "@/middleware";
+
 import { UserSubscriptionPlan } from "types";
 import { pricingData } from "@/config/subscriptions";
 import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
+
+import { AUTH_ERRORS } from "./auth";
 
 export async function getUserSubscriptionPlan(
   userId: string,
@@ -21,13 +24,16 @@ export async function getUserSubscriptionPlan(
   });
 
   if (!user) {
-    throw new Error("User not found");
+    throw new Error(AUTH_ERRORS.USER_NOT_FOUND);
   }
+
+  const stripeCurrentPeriodEnd = user.stripeCurrentPeriodEnd
+    ? new Date(user.stripeCurrentPeriodEnd).getTime()
+    : new Date().getTime();
 
   // Check if user is on a paid plan.
   const isPaid =
-    user.stripePriceId &&
-    user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
+    user.stripePriceId && stripeCurrentPeriodEnd + 86_400_000 > Date.now()
       ? true
       : false;
 
@@ -57,7 +63,7 @@ export async function getUserSubscriptionPlan(
   return {
     ...plan,
     ...user,
-    stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd?.getTime(),
+    stripeCurrentPeriodEnd,
     isPaid,
     interval,
     isCanceled,

@@ -6,6 +6,7 @@ export async function getFacebookToken(userId: string) {
     "oauth_facebook",
   );
 
-  if (!token.length) return null;
-  return token;
+  if (!token.length) return;
+  const facebookToken = token.find((t) => t.provider === "oauth_facebook");
+  return facebookToken?.token;
 }

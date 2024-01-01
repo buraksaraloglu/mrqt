@@ -6,14 +6,14 @@ import Avatar from "boring-avatars";
 import { Icons } from "@/components/shared/icons";
 
 interface UserAvatarProps extends AvatarProps {
-  user: Pick<User, "image" | "name" | "email">;
+  userId?: string;
 }
 
-export function UserAvatar({ user, ...props }: UserAvatarProps) {
+export function UserAvatar({ userId, ...props }: UserAvatarProps) {
   return (
     <Avatar
       size={40}
-      name={user.name || user.email || "Anonymous"}
+      name={userId || "Anonymous"}
       variant="marble"
       // colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
     />

@@ -1,3 +1,5 @@
+import { Typography } from "../ui/typography";
+
 interface DashboardHeaderProps {
   heading: string;
   text?: string;
@@ -10,9 +12,9 @@ export function DashboardHeader({
   children,
 }: DashboardHeaderProps) {
   return (
-    <div className="flex items-center justify-between px-2">
+    <div className="flex items-center justify-between">
       <div className="grid gap-1">
-        <h1 className="font-heading text-xl md:text-2xl">{heading}</h1>
+        <Typography variant="h3">{heading}</Typography>
         {text && <p className="text-muted-foreground">{text}</p>}
       </div>
       {children}

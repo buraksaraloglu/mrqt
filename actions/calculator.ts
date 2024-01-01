@@ -1,11 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
 import { z } from "zod";
 
-import { authOptions } from "@/lib/auth-old";
-import { prisma } from "@/lib/db";
 import { marketingBudgetSchema } from "@/lib/validations/marketing-budget";
 
 export type FormData = z.infer<typeof marketingBudgetSchema>;

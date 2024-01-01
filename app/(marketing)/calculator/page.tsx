@@ -12,7 +12,7 @@ export default async function CalculatorPage() {
   return (
     <div className="flex w-full flex-col gap-8 py-8 md:py-8">
       <div className="grid gap-1">
-        <h1 className="font-heading text-xl md:text-2xl">Calculator</h1>
+        <h1 className="text-xl md:text-2xl">Calculator</h1>
       </div>
       <div className="grid gap-10">
         <CalculatorForm />

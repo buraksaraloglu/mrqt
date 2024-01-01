@@ -1,3 +1,5 @@
+import { UserSubscriptionPlan } from "@/types";
+
 import { requireUser } from "@/lib/auth";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

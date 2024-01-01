@@ -1,9 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/auth-old";
 import { stripe } from "@/lib/stripe";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { absoluteUrl } from "@/lib/utils";
@@ -22,13 +22,15 @@ export async function generateUserStripe(
   let redirectUrl: string = "";
 
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || !session?.user.email) {
+    const user = await currentUser();
+    const primaryEmail = user?.emailAddresses.find(
+      (email) => email.id === user.primaryEmailAddressId,
+    )?.emailAddress;
+    if (!user || !primaryEmail) {
       throw new Error("Unauthorized");
     }
 
-    const subscriptionPlan = await getUserSubscriptionPlan(session.user.id);
+    const subscriptionPlan = await getUserSubscriptionPlan(user.id);
 
     if (subscriptionPlan.isPaid && subscriptionPlan.stripeCustomerId) {
       // User on Paid Plan - Create a portal session to manage subscription.
@@ -46,7 +48,7 @@ export async function generateUserStripe(
         payment_method_types: ["card"],
         mode: "subscription",
         billing_address_collection: "auto",
-        customer_email: session.user.email,
+        customer_email: primaryEmail,
         line_items: [
           {
             price: priceId,
@@ -54,7 +56,7 @@ export async function generateUserStripe(
           },
         ],
         metadata: {
-          userId: session.user.id,
+          userId: user.id,
         },
       });
 

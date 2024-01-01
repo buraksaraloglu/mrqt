@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/auth-old";
+import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { userNameSchema } from "@/lib/validations/user";
 
@@ -13,11 +13,7 @@ export type FormData = {
 
 export async function updateUserName(userId: string, data: FormData) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session?.user.id !== userId) {
-      throw new Error("Unauthorized");
-    }
+    const user = await requireUser();
 
     const { name } = userNameSchema.parse(data);
 
@@ -26,9 +22,7 @@ export async function updateUserName(userId: string, data: FormData) {
       where: {
         id: userId,
       },
-      data: {
-        name: name,
-      },
+      data: {},
     });
 
     revalidatePath("/app/settings");

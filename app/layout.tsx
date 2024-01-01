@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 
-import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
+import { fontSans, fontUrban } from "@/assets/fonts";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -61,7 +61,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "min-h-screen bg-background font-sans antialiased",
             fontSans.variable,
             fontUrban.variable,
-            fontHeading.variable,
           )}
         >
           <InnerProviders attribute="class" defaultTheme="system" enableSystem>

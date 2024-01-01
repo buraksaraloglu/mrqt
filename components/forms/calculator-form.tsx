@@ -431,7 +431,7 @@ const Metric = ({
     <div>
       <Label>{label}</Label>
       <p className="text-xl">
-        <span className="font-heading">
+        <span className="">
           {new Intl.NumberFormat("en-US", {
             maximumFractionDigits: 0,
           }).format(value)}

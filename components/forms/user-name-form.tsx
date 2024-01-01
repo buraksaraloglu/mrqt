@@ -23,7 +23,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/shared/icons";
 
 interface UserNameFormProps {
-  user: Pick<User, "id" | "name">;
+  user: Pick<User, "id">;
 }
 
 export function UserNameForm({ user }: UserNameFormProps) {
@@ -37,7 +37,7 @@ export function UserNameForm({ user }: UserNameFormProps) {
   } = useForm<FormData>({
     resolver: zodResolver(userNameSchema),
     defaultValues: {
-      name: user?.name || "",
+      name: "",
     },
   });
 

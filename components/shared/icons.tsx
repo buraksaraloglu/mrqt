@@ -1,3 +1,4 @@
+import { RiFacebookFill } from "@remixicon/react";
 import {
   AlertTriangle,
   ArrowRight,
@@ -5,7 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CreditCard,
-  Facebook,
   File,
   FileText,
   HelpCircle,
@@ -73,7 +73,7 @@ export const Icons = {
       />
     </svg>
   ),
-  facebook: ({ ...props }: LucideProps) => <Facebook {...props} />,
+  facebook: ({ ...props }) => <RiFacebookFill {...props} />,
   help: HelpCircle,
   laptop: Laptop,
   logo: Puzzle,

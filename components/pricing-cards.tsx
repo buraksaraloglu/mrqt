@@ -37,7 +37,7 @@ export async function PricingCards({
         <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
           Pricing
         </p>
-        <h2 className="font-heading text-3xl leading-[1.1] md:text-5xl">
+        <h2 className="text-3xl leading-[1.1] md:text-5xl">
           Start at full speed !
         </h2>
       </div>

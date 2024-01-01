@@ -8,56 +8,17 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Account {
-  id                String   @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-  createdAt         DateTime @default(now()) @map(name: "created_at")
-  updatedAt         DateTime @default(now()) @map(name: "updated_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
-  @@map(name: "accounts")
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map(name: "sessions")
-}
-
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  id String @id @default(cuid())
 
-  accounts Account[]
-  sessions Session[]
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  stripeCustomerId       String?             @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?             @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?             @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime?           @map(name: "stripe_current_period_end")
+  FacebookAdAccount      FacebookAdAccount[]
 
   @@map(name: "users")
 }
@@ -76,4 +37,19 @@ model AdLabel {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+}
+
+model FacebookAdAccount {
+  id        String   @id @default(cuid())
+  name      String
+  accountId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  isActive  Boolean  @default(false)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([accountId, userId])
+  @@index([userId])
 }

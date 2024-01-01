@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { User } from "@clerk/backend";
+import { useClerk } from "@clerk/nextjs";
 import { UserResource } from "@clerk/types";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
-import { signOut } from "next-auth/react";
 
 import {
   DropdownMenu,
@@ -20,17 +21,13 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
+  const { signOut } = useClerk();
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar
-          user={{
-            name: user?.emailAddresses[0].emailAddress || null,
-            image: user?.imageUrl || null,
-            email: user?.emailAddresses[0].emailAddress || null,
-          }}
-          className="h-8 w-8"
-        />
+        <UserAvatar userId={user.id} className="h-8 w-8" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
@@ -71,9 +68,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           className="cursor-pointer"
           onSelect={(event) => {
             event.preventDefault();
-            signOut({
-              callbackUrl: `${window.location.origin}/`,
-            });
+            signOut(() => router.push("/"));
           }}
         >
           <div className="flex items-center space-x-2.5">

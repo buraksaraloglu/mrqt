@@ -30,3 +30,9 @@ export interface AdParams {
   adset_id: string;
   adSetId: number;
 }
+
+export interface AdAccount {
+  id: string;
+  name: string;
+  account_id: string;
+}
