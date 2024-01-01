@@ -1,6 +1,3 @@
-// TODO: Fix this when we turn strict mode on.
-import { initUser } from "@/middleware";
-
 import { UserSubscriptionPlan } from "types";
 import { pricingData } from "@/config/subscriptions";
 import { prisma } from "@/lib/db";
