@@ -24,6 +24,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "container",
     },
     {
+      title: "Integrations",
+      href: "/app/integrations",
+      icon: "cable",
+    },
+    {
       title: "Billing",
       href: "/app/billing",
       icon: "billing",

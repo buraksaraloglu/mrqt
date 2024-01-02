@@ -1,7 +1,7 @@
 import { Typography } from "../ui/typography";
 
 interface DashboardHeaderProps {
-  heading: string;
+  heading?: React.ReactNode;
   text?: string;
   children?: React.ReactNode;
 }

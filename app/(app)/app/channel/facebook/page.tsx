@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { AdAccount } from "@/services/facebook/interfaces";
 import { getUserFacebookAdAccounts } from "@/services/facebook/service/ad-account";
 import { FacebookAdAccount } from "@prisma/client";
 
 import { requireUser } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,10 +12,8 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Typography } from "@/components/ui/typography";
-import { DashboardHeader } from "@/components/dashboard/header";
-import { DashboardShell } from "@/components/dashboard/shell";
+import { PageHeader } from "@/components/page";
 
 async function getAdAccountsOfUser() {}
 
@@ -26,8 +22,8 @@ export default async function AdAccountPage() {
   const adAccounts = await getUserFacebookAdAccounts(user.id, false);
 
   return (
-    <DashboardShell>
-      <DashboardHeader heading="Facebook Ad Accounts" />
+    <>
+      <PageHeader title="Facebook Ad Accounts" />
       {adAccounts && adAccounts?.length > 0 ? (
         <div className="grid gap-10">
           <div>
@@ -49,7 +45,7 @@ export default async function AdAccountPage() {
       ) : (
         <div>No Ad Accounts</div>
       )}
-    </DashboardShell>
+    </>
   );
 }
 

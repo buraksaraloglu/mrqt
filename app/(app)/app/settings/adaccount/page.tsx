@@ -5,10 +5,8 @@ import {
 
 import { requireUser } from "@/lib/auth";
 import { Typography } from "@/components/ui/typography";
-import { DashboardContent } from "@/components/dashboard/content";
-import { DashboardHeader } from "@/components/dashboard/header";
-import { DashboardShell } from "@/components/dashboard/shell";
 import { ImportFBAdAccountForm } from "@/components/forms/import-fb-ad-account-form";
+import { PageContent, PageHeader } from "@/components/page";
 import { Icons } from "@/components/shared/icons";
 
 export default async function AdAccountPage() {
@@ -19,10 +17,10 @@ export default async function AdAccountPage() {
   ]);
 
   return (
-    <DashboardShell>
-      <DashboardHeader heading="Ad Accounts" text="Manage your ad accounts." />
+    <>
+      <PageHeader title="Ad Accounts" subtitle="Manage your ad accounts." />
       {/* <Link href="/app/settings/adaccount">Ad Account</Link> */}
-      <DashboardContent>
+      <PageContent>
         <div className="grid gap-10">
           <div>
             <Typography variant="h3" className="flex items-center gap-2">
@@ -41,7 +39,7 @@ export default async function AdAccountPage() {
             </div>
           </div>
         </div>
-      </DashboardContent>
-    </DashboardShell>
+      </PageContent>
+    </>
   );
 }

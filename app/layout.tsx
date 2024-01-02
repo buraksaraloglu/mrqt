@@ -9,6 +9,7 @@ import { Analytics } from "@/components/analytics";
 import { ModalProvider } from "@/components/modal-provider";
 import { InnerProviders, OuterProviders } from "@/components/providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { WebVitals } from "@/components/web-witals";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -64,6 +65,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <InnerProviders attribute="class" defaultTheme="system" enableSystem>
+            <WebVitals />
+
             {children}
             <Analytics />
             <Toaster />

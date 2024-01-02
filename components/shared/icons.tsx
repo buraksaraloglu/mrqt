@@ -2,6 +2,7 @@ import { RiFacebookFill } from "@remixicon/react";
 import {
   AlertTriangle,
   ArrowRight,
+  Cable,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -34,6 +35,7 @@ export const Icons = {
   add: Plus,
   arrowRight: ArrowRight,
   billing: CreditCard,
+  cable: Cable,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   check: Check,
