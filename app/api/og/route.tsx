@@ -98,7 +98,6 @@ export async function GET(req: Request) {
                 <div tw="text-[22px]" style={{ fontFamily: "Cal Sans" }}>
                   {githubName}
                 </div>
-                <div>Open Source Designer</div>
               </div>
             </div>
 
@@ -137,7 +136,7 @@ export async function GET(req: Request) {
             style: "normal",
           },
           {
-            name: "Cal Sans",
+            name: "Inter",
             data: fontBold,
             weight: 700,
             style: "normal",
