@@ -9,7 +9,7 @@ const interRegular = fetch(
 ).then((res) => res.arrayBuffer());
 
 const interBold = fetch(
-  new URL("../../../assets/fonts/Inter-Bold.ttf", import.meta.url),
+  new URL("../../../assets/fonts/CalSans-SemiBold.ttf", import.meta.url),
 ).then((res) => res.arrayBuffer());
 
 export async function GET(req: Request) {
@@ -29,7 +29,7 @@ export async function GET(req: Request) {
 
     const fontSize = heading.length > 80 ? "60px" : "80px";
 
-    const githubName = "buraksaraloglu";
+    const githubName = "mickasmt";
 
     return new ImageResponse(
       (
@@ -98,6 +98,7 @@ export async function GET(req: Request) {
                 <div tw="text-[22px]" style={{ fontFamily: "Cal Sans" }}>
                   {githubName}
                 </div>
+                <div>Open Source Designer</div>
               </div>
             </div>
 
@@ -121,6 +122,9 @@ export async function GET(req: Request) {
                   stroke-linejoin="round"
                 />
               </svg>
+              <div tw="flex ml-2">
+                github.com/mickasmt/next-saas-stripe-starter
+              </div>
             </div>
           </div>
         </div>
@@ -136,7 +140,7 @@ export async function GET(req: Request) {
             style: "normal",
           },
           {
-            name: "Inter",
+            name: "Cal Sans",
             data: fontBold,
             weight: 700,
             style: "normal",
