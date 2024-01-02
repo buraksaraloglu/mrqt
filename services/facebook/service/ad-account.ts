@@ -55,12 +55,15 @@ export async function fetchUserFacebookAdAccounts(userId: string) {
   return facebookAdAccounts;
 }
 
-export async function getUserFacebookAdAccounts(userId: string) {
+export async function getUserFacebookAdAccounts(
+  userId: string,
+  onlyActives = true,
+) {
   try {
     const adAccounts = await prisma.facebookAdAccount.findMany({
       where: {
         userId,
-        isActive: true,
+        isActive: onlyActives || undefined,
       },
     });
 

@@ -14,7 +14,7 @@ export async function upsertAdAccount(data: UpdateAdAccountData) {
   const user = await requireUser();
 
   try {
-    await prisma.facebookAdAccount.upsert({
+    const updatedAdAccount = await prisma.facebookAdAccount.upsert({
       where: {
         id: data.id,
         userId: user.id,
@@ -36,8 +36,8 @@ export async function upsertAdAccount(data: UpdateAdAccountData) {
     });
 
     revalidatePath("/app/settings/adaccount");
-    return { status: "success" };
+    return { status: "success", data: { adAccount: updatedAdAccount } };
   } catch (error) {
-    return { status: "error" };
+    return { status: "error", data: null };
   }
 }

@@ -19,14 +19,9 @@ export const dashboardConfig: DashboardConfig = {
       icon: "post",
     },
     {
-      title: "Ad Accounts",
-      href: "/app/ad-account/facebook",
-      icon: "post",
-    },
-    {
-      title: "Facebook",
-      href: "/app/facebook",
-      icon: "post",
+      title: "Channels",
+      href: "/app/channel/facebook",
+      icon: "container",
     },
     {
       title: "Billing",

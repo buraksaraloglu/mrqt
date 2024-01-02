@@ -61,7 +61,7 @@ function SelectAdAccount({
   const onSwitch = useCallback(
     (isActive: boolean) => {
       startTransition(async () => {
-        const { status } = await upsertAdAccount({
+        const { status, data } = await upsertAdAccount({
           ...adAccount,
           isActive,
         });
@@ -73,8 +73,10 @@ function SelectAdAccount({
           });
         } else {
           toast({
-            description: "Updated your ad accounts",
-            variant: "success",
+            title: "Updated",
+            description: `${adAccount.name} has been ${
+              isActive ? "activated" : "removed"
+            }`,
           });
         }
       });

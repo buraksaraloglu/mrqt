@@ -5,6 +5,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  Container,
   CreditCard,
   File,
   FileText,
@@ -74,6 +75,7 @@ export const Icons = {
     </svg>
   ),
   facebook: ({ ...props }) => <RiFacebookFill {...props} />,
+  container: Container,
   help: HelpCircle,
   laptop: Laptop,
   logo: Puzzle,
