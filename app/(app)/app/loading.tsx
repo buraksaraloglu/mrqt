@@ -13,7 +13,7 @@ export default function DashboardLoading() {
         actions={<Button>Fake button</Button>}
       />
 
-      <div className="divide-border-200 divide-y rounded-md border">
+      <div className="divide-border-200 space-y-4 divide-y rounded-md">
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />

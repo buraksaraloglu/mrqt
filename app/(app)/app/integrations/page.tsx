@@ -9,6 +9,8 @@ import { DashboardShell } from "@/components/dashboard/shell";
 import { PageContent, PageHeader } from "@/components/page";
 import { Icons } from "@/components/shared/icons";
 
+import { ConnectShopifyForm } from "./shopify/connect";
+
 type PlatformProps = {
   name: string;
   icon?: React.ReactNode;
@@ -85,8 +87,18 @@ export default async function Integrations() {
     <>
       <PageHeader title="Integrations" />
 
-      <PageContent>
+      <PageContent className="space-y-4 md:space-y-6">
         <ConnectAdPlatforms />
+
+        <div className="space-y-4">
+          <Typography variant="h4">Connect Store</Typography>
+
+          <div>
+            <div className="max-w-md">
+              <ConnectShopifyForm />
+            </div>
+          </div>
+        </div>
       </PageContent>
     </>
   );
