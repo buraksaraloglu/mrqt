@@ -40,16 +40,30 @@ model AdLabel {
 }
 
 model FacebookAdAccount {
-  id        String   @id @default(cuid())
+  id        String                  @id @default(cuid())
   name      String
   accountId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  isActive  Boolean  @default(false)
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @default(now())
+  isActive  Boolean                 @default(false)
+  status    FacebookAdAccountStatus @default(ANY_ACTIVE)
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   @@unique([accountId, userId])
   @@index([userId])
+}
+
+enum FacebookAdAccountStatus {
+  ACTIVE
+  DISABLED
+  UNSETTLED
+  PENDING_RISK_REVIEW
+  PENDING_SETTLEMENT
+  IN_GRACE_PERIOD
+  PENDING_CLOSURE
+  CLOSED
+  ANY_ACTIVE
+  ANY_CLOSED
 }

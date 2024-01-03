@@ -23,7 +23,7 @@ export async function fetchFacebookAdAccounts(
     AdAccount.Fields.account_id,
     AdAccount.Fields.name,
   ],
-): Promise<any> {
+) {
   FacebookAdsApi.init(accessToken);
   const userId = await whoAmI(accessToken);
   if (!userId) throw new Error("Could not fetch Facebook user ID");
@@ -34,7 +34,7 @@ export async function fetchFacebookAdAccounts(
         return {
           id: account.id,
           name: account.name,
-          account_id: account.account_id,
+          accountId: account.account_id,
         };
       });
     });
@@ -68,6 +68,6 @@ export async function getUserFacebookAdAccounts(
 
     return adAccounts;
   } catch (error) {
-    return null;
+    return;
   }
 }

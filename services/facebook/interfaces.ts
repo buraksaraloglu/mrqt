@@ -34,5 +34,5 @@ export interface AdParams {
 export interface AdAccount {
   id: string;
   name: string;
-  account_id: string;
+  accountId: string;
 }

@@ -25,7 +25,7 @@ export async function upsertAdAccount(data: UpdateAdAccountData) {
       create: {
         id: data.id,
         name: data.name,
-        accountId: data.id,
+        accountId: data.accountId,
         isActive: data.isActive || false,
         user: {
           connect: {
@@ -35,7 +35,6 @@ export async function upsertAdAccount(data: UpdateAdAccountData) {
       },
     });
 
-    revalidatePath("/app/settings/adaccount");
     return { status: "success", data: { adAccount: updatedAdAccount } };
   } catch (error) {
     return { status: "error", data: null };

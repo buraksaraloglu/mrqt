@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { requireUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
@@ -18,7 +19,7 @@ function PlatformCard({ name, icon, path }: PlatformProps) {
   const disabled = !path;
   return (
     <Link href={path || "#"} aria-disabled={disabled}>
-      <Card className="grid h-full justify-between">
+      <Card className="grid h-full w-60 justify-between gap-2">
         {icon && (
           <CardHeader className="h-full">
             <div className="h-full">
@@ -34,8 +35,12 @@ function PlatformCard({ name, icon, path }: PlatformProps) {
           <div className="grid gap-1">
             <Typography weight="bold">{name}</Typography>
             <Button variant="outline" disabled={disabled} className="gap-1">
-              Connect
-              <Icons.arrowRight className="h-4 w-4" />
+              {disabled ? "Coming soon" : "Connect"}
+              {disabled ? (
+                <Icons.clock className="h-4 w-4 opacity-50" />
+              ) : (
+                <Icons.arrowRight className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </CardFooter>
@@ -62,10 +67,10 @@ function ConnectAdPlatforms() {
   ];
 
   return (
-    <div>
+    <div className="space-y-4">
       <Typography variant="h4">Ad Platforms</Typography>
 
-      <div className="flex flex-wrap">
+      <div className="grid auto-cols-min grid-flow-col-dense gap-4">
         {platforms.map((platform) => (
           <PlatformCard key={platform.name} {...platform} />
         ))}
@@ -74,7 +79,8 @@ function ConnectAdPlatforms() {
   );
 }
 
-export default function Integrations() {
+export default async function Integrations() {
+  const user = await requireUser();
   return (
     <>
       <PageHeader title="Integrations" />
