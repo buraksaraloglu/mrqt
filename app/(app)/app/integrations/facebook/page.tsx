@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AdAccount } from "@/services/facebook/interfaces";
 import {
   fetchUserFacebookAdAccounts,
   getUserFacebookAdAccounts,
 } from "@/services/facebook/service/ad-account";
+import { AdAccount } from "@/services/facebook/types";
 import { FacebookAdAccount } from "@prisma/client";
 
 import { siteConfig } from "@/config/site";

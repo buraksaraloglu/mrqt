@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { AdAccount } from "@/services/facebook/interfaces";
+import { AdAccount } from "@/services/facebook/types";
 
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";

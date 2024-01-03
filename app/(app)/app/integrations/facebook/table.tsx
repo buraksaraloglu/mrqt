@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { upsertAdAccount } from "@/actions/import-fb-adaccount";
-import { AdAccount } from "@/services/facebook/interfaces";
+import { AdAccount } from "@/services/facebook/types";
 import { FacebookAdAccount, FacebookAdAccountStatus } from "@prisma/client";
 import {
   ColumnDef,
