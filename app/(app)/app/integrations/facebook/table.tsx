@@ -189,7 +189,9 @@ export const columns: ColumnDef<AdAccount>[] = [
         </Typography>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <Typography weight="semi">{row.getValue("name")}</Typography>
+    ),
   },
   {
     accessorKey: "status",

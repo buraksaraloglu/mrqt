@@ -20,6 +20,7 @@ const typographyVariants = cva(["tracking-tight"], {
       light: "font-light",
       normal: "font-normal",
       medium: "font-medium",
+      semi: "font-semibold",
       bold: "font-bold",
       heading: "font-extrabold",
     },

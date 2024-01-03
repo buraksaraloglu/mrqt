@@ -27,12 +27,7 @@ export default async function FacebookIntegrationPage() {
   return (
     <>
       <PageHeader
-        title={
-          <>
-            {/* <Icons.facebook /> */}
-            Facebook Ad Accounts
-          </>
-        }
+        title="Facebook Ad Accounts"
         description={`Your monthly bill is calculated by the combined ad spend of active ad accounts managed by ${siteConfig.name}.`}
         actions={
           <>
