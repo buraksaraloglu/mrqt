@@ -36,20 +36,92 @@ model AdLabel {
   id        String   @id @default(cuid())
   name      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model FacebookAdAccount {
-  id        String   @id @default(cuid())
+  id        String                  @id @default(cuid())
   name      String
   accountId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  isActive  Boolean  @default(false)
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+  isActive  Boolean                 @default(false)
+  status    FacebookAdAccountStatus @default(ANY_ACTIVE)
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String
+  facebookCampaign FacebookCampaign[]
 
   @@unique([accountId, userId])
   @@index([userId])
+}
+
+model FacebookCampaign {
+  id                  String            @id @default(cuid())
+  name                String
+  status              String
+  buyingType          String
+  objective           String
+  specialAdCategories String
+  startTime           DateTime?
+  endTime             DateTime?
+  dailyBudget         Float
+  target              Json
+  campaignType        String
+  facebookAdAccount   FacebookAdAccount @relation(fields: [facebookAdAccountId], references: [id])
+  facebookAdAccountId String
+  facebookAdSet       FacebookAdSet[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([facebookAdAccountId])
+}
+
+model FacebookAdSet {
+  id           String @id @default(cuid())
+  name         String
+  status       String
+  targeting    Json
+  billingEvent String
+  bidAmount    Float
+  adSetId      String
+
+  facebookCampaign   FacebookCampaign? @relation(fields: [facebookCampaignId], references: [id], onDelete: Cascade)
+  facebookCampaignId String?
+  facebookAd         FacebookAd[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([facebookCampaignId])
+}
+
+model FacebookAd {
+  id              String        @id @default(cuid())
+  name            String
+  status          String
+  adSetId         String
+  adId            String        @unique
+  facebookAdSet   FacebookAdSet @relation(fields: [facebookAdSetId], references: [id], onDelete: Cascade)
+  facebookAdSetId String
+  creative        Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([facebookAdSetId])
+}
+
+enum FacebookAdAccountStatus {
+  ACTIVE
+  DISABLED
+  UNSETTLED
+  PENDING_RISK_REVIEW
+  PENDING_SETTLEMENT
+  IN_GRACE_PERIOD
+  PENDING_CLOSURE
+  CLOSED
+  ANY_ACTIVE
+  ANY_CLOSED
 }

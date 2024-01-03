@@ -1,10 +1,49 @@
-import { PageContent, PageHeader } from "@/components/page";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  fetchUserFacebookAdAccounts,
+  getUserFacebookAdAccounts,
+} from "@/services/facebook/service/ad-account";
+import { AdAccount } from "@/services/facebook/types";
+import { FacebookAdAccount } from "@prisma/client";
 
-export default function FacebookIntegrationPage() {
+import { siteConfig } from "@/config/site";
+import { requireUser } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { Typography } from "@/components/ui/typography";
+import { PageContent, PageHeader } from "@/components/page";
+import { Icons } from "@/components/shared/icons";
+
+import { IntegrationNav, NavLink } from "../navigation";
+import { FacebookAdAccountsTable } from "./table";
+
+export default async function FacebookIntegrationPage() {
+  const user = await requireUser();
+  const [fbAdAccounts, userFbAdAccounts] = await Promise.all([
+    fetchUserFacebookAdAccounts(user.id),
+    getUserFacebookAdAccounts(user.id, false),
+  ]);
+
   return (
     <>
-      <PageHeader title="Facebook" />
-      <PageContent>as</PageContent>
+      <PageHeader
+        title="Facebook Ad Accounts"
+        description={`Your monthly bill is calculated by the combined ad spend of active ad accounts managed by ${siteConfig.name}.`}
+        actions={
+          <>
+            <Button variant="outline">Connect profile</Button>
+          </>
+        }
+      />
+      <PageContent>
+        <IntegrationNav />
+        {fbAdAccounts && (
+          <FacebookAdAccountsTable
+            fbAdAccounts={fbAdAccounts}
+            userAdAccounts={userFbAdAccounts}
+          />
+        )}
+      </PageContent>
     </>
   );
 }

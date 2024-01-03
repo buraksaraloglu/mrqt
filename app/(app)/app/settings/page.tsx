@@ -19,7 +19,7 @@ export default async function SettingsPage() {
         title="Settings"
         subtitle="Manage account and website settings."
       />
-      <Link href="/app/settings/adaccount">Ad Account</Link>
+
       {/* <div className="grid gap-10">
         <UserNameForm user={{ id: user.id, name: user.username || "" }} />
       </div> */}
