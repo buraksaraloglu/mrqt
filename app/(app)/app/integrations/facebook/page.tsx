@@ -7,6 +7,7 @@ import {
 } from "@/services/facebook/service/ad-account";
 import { FacebookAdAccount } from "@prisma/client";
 
+import { siteConfig } from "@/config/site";
 import { requireUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
@@ -32,7 +33,7 @@ export default async function FacebookIntegrationPage() {
             Facebook Ad Accounts
           </>
         }
-        description="Your monthly bill is calculated by the combined ad spend of active ad accounts managed by okbrk."
+        description={`Your monthly bill is calculated by the combined ad spend of active ad accounts managed by ${siteConfig.name}.`}
         actions={
           <>
             <Button variant="outline">Connect profile</Button>
