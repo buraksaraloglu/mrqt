@@ -338,7 +338,7 @@ export function FacebookAdAccountsTable({
         ...userAdAccount,
       };
     });
-  }, []);
+  }, [fbAdAccounts, userAdAccounts]);
 
   const table = useReactTable({
     data: mapped,
