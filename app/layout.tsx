@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 
 import { fontSans, fontUrban } from "@/assets/fonts";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Toaster />
             <ModalProvider />
             <TailwindIndicator />
+            <SpeedInsights />
           </InnerProviders>
         </body>
       </html>
