@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import useScroll from "@/hooks/use-scroll";
 import { Button, buttonVariants } from "@/components/ui/button";
 
+import { typographyVariants } from "../ui/typography";
 import { MainNav } from "./main-nav";
 import { UserAccountNav } from "./user-account-nav";
 
@@ -44,9 +45,7 @@ export function NavBar({
             !user ? (
               <Link
                 href="/login"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" }),
-                )}
+                className={cn(typographyVariants({ variant: "muted" }))}
               >
                 Login
               </Link>
