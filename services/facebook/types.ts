@@ -49,3 +49,8 @@ export type CreateFacebookCampaignParams = {
   facebookAccessToken: string;
   userId: string;
 };
+
+export type GetFacebookCampaignParams = {
+  campaignId: string;
+  facebookAccessToken: string;
+};

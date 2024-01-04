@@ -28,3 +28,35 @@ export const createLocalFacebookCampaign = async ({
 
   return localCampaign;
 };
+
+export const getLocalFacebookCampaign = async ({
+  facebookCampaignId,
+}: {
+  facebookCampaignId: string;
+}) => {
+  const localCampaign = await prisma.facebookCampaign.findUnique({
+    where: {
+      id: facebookCampaignId,
+    },
+  });
+
+  return localCampaign;
+};
+
+export const getAllLocalCampaigns = async ({
+  adAccountId,
+}: {
+  adAccountId: string;
+}) => {
+  try {
+    const localCampaigns = await prisma.facebookCampaign.findMany({
+      where: {
+        facebookAdAccountId: adAccountId,
+      },
+    });
+    return localCampaigns;
+  } catch (error) {
+    console.error("Error fetching local campaigns from the database:", error);
+    throw new Error("Error fetching local campaigns");
+  }
+};

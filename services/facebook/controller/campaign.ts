@@ -1,5 +1,13 @@
-import { createLocalFacebookCampaign } from "../model/campaign";
-import { createFacebookCampaign } from "../service/campaign";
+import {
+  createLocalFacebookCampaign,
+  getAllLocalCampaigns,
+  getLocalFacebookCampaign,
+} from "../model/campaign";
+import {
+  createFacebookCampaign,
+  getAllFacebookCampaigns,
+  getFacebookCampaign,
+} from "../service/campaign";
 import { FacebookCampaignParams } from "../types";
 
 type CreateCampaignHandlerParams = {
@@ -7,6 +15,11 @@ type CreateCampaignHandlerParams = {
   facebookAccessToken: string;
   adAccountId: string;
   userId: string;
+};
+
+type GetCampaignHandlerParams = {
+  campaignId: string;
+  facebookAccessToken: string;
 };
 
 export const createCampaignHandler = async ({
@@ -25,29 +38,42 @@ export const createCampaignHandler = async ({
   return localCampaign;
 };
 
-// export const getCampaignHandler = async (
-//   req: Request,
-//   res: Response,
-//   isNestedCall: boolean = false,
-// ) => {
-//   try {
-//     const { campaign_ids } = req.body;
+export const getFacebookCampaignHandler = async ({
+  campaignId,
+  facebookAccessToken,
+}: GetCampaignHandlerParams) => {
+  const facebookCampaign = await getFacebookCampaign({
+    campaignId,
+    facebookAccessToken,
+  });
 
-//     const dbCampaign = campaign_ids
-//       ? await prisma.campaign.findMany({
-//           where: { campaign_id: { in: campaign_ids } },
-//         })
-//       : [];
+  const localCampaign = await getLocalFacebookCampaign({
+    facebookCampaignId: facebookCampaign.id,
+  });
 
-//     const fbCampaign = campaign_ids ? await getCampaign(campaign_ids) : [];
+  const combinedData = {
+    facebookCampaign,
+    localCampaign,
+  };
 
-//     if (isNestedCall) {
-//       return { dbCampaign, fbCampaign };
-//     } else {
-//       res.json({ dbCampaign, fbCampaign });
-//     }
-//   } catch (error) {
-//     console.error("Error fetching campaign data:", error);
-//     next(error);
-//   }
-// };
+  return combinedData;
+};
+
+export const getAllCampaignsHandler = async ({
+  facebookAccessToken,
+  adAccountId,
+}) => {
+  const facebookCampaigns = await getAllFacebookCampaigns({
+    facebookAccessToken,
+    adAccountId,
+  });
+
+  const localCampaigns = await getAllLocalCampaigns(adAccountId);
+
+  const combinedData = {
+    facebookCampaigns,
+    localCampaigns,
+  };
+
+  return combinedData;
+};
