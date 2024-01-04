@@ -22,14 +22,10 @@ import { cn } from "@/lib/utils";
 import { useCopyToClipboard } from "@/hooks/use-copy-clipboard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -112,7 +108,6 @@ function AdAccountSwitch({
   const [selected, setSelected] = React.useState(() =>
     Boolean(defaultSelected),
   );
-  const [value, copy] = useCopyToClipboard();
 
   const [isPending, startTransition] = React.useTransition();
   const onSwitch = React.useCallback(
@@ -125,12 +120,12 @@ function AdAccountSwitch({
           isActive,
         });
         if (status !== "success" || data === null) {
+          setSelected(!isActive);
           toast({
             title: "Something went wrong.",
             description: "Could not import your ad accounts",
             variant: "destructive",
           });
-          setSelected(!isActive);
         } else {
           toast({
             title: "Updated",
