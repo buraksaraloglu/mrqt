@@ -117,9 +117,11 @@ function AdAccountSwitch({
   const [isPending, startTransition] = React.useTransition();
   const onSwitch = React.useCallback(
     (isActive: boolean) => {
+      setSelected(isActive);
       startTransition(async () => {
         const { status, data } = await upsertAdAccount({
-          ...adAccount,
+          accountId: adAccount.accountId,
+          id: adAccount.id,
           isActive,
         });
         if (status !== "success" || data === null) {
@@ -128,6 +130,7 @@ function AdAccountSwitch({
             description: "Could not import your ad accounts",
             variant: "destructive",
           });
+          setSelected(!isActive);
         } else {
           toast({
             title: "Updated",
@@ -141,16 +144,13 @@ function AdAccountSwitch({
     [adAccount],
   );
 
-  const handleSwitch = React.useCallback(() => {
-    setSelected((prev) => !prev);
-
-    // TODO: would this work if api fails?
-    onSwitch(!selected);
-  }, [onSwitch, selected]);
-
   return (
     <form>
-      <Switch checked={selected} onClick={handleSwitch} disabled={isPending} />
+      <Switch
+        checked={selected}
+        onClick={() => onSwitch(!selected)}
+        disabled={isPending}
+      />
     </form>
   );
 }
