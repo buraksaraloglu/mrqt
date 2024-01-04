@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { getFacebookToken } from "@/services/facebook";
-import {
-  createCampaignHandler,
-  validateCampaignInput,
-} from "@/services/facebook/controller/campaign";
+import { createCampaignHandler } from "@/services/facebook/controller/campaign";
+import { validateCampaignInput } from "@/services/facebook/schema/campaign";
 
 import { requireUser } from "@/lib/auth";
 
@@ -20,9 +18,9 @@ export async function POST(
   }
 
   const createdFacebookCampaign = await createCampaignHandler({
+    adAccountId: ctx.params.adAccountId,
     campaign,
     facebookAccessToken,
-    adAccountId: ctx.params.adAccountId,
     userId: user.id,
   });
 

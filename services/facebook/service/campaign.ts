@@ -1,20 +1,12 @@
 import { AdAccount, FacebookAdsApi } from "facebook-nodejs-business-sdk";
 
-import { requireUser } from "@/lib/auth";
-import { prisma } from "@/lib/db";
-
-import { getFacebookToken } from "../lib";
-import { CreateFacebookCampaignParams, FacebookCampaignParams } from "../types";
+import { CreateFacebookCampaignParams } from "../types";
 
 export const createFacebookCampaign = async ({
   campaign,
   adAccountId,
   facebookAccessToken,
 }: CreateFacebookCampaignParams) => {
-  const specialAdCategoriesString = JSON.stringify(
-    campaign.special_ad_categories || "",
-  );
-
   FacebookAdsApi.init(facebookAccessToken!);
 
   const account = new AdAccount(
@@ -22,17 +14,11 @@ export const createFacebookCampaign = async ({
     FacebookAdsApi.init(facebookAccessToken!),
   );
 
-  const campaignParams: FacebookCampaignParams = {
-    ...campaign,
-
-    special_ad_categories: JSON.parse(specialAdCategoriesString || "[]"),
-  };
-
-  const createdCampaign = await account.createCampaign([], campaignParams);
+  const createdCampaign = await account.createCampaign([], campaign);
   const facebookCampaignId = createdCampaign._data.id;
 
   if (!facebookCampaignId || typeof facebookCampaignId !== "string") {
-    throw new Error("No facebook campaignId found");
+    throw new Error("No facebook campaignId created");
   }
   return facebookCampaignId;
 };
