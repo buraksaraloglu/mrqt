@@ -103,7 +103,7 @@ export const deleteCampaignHandler = async ({
     facebookCampaignId: campaignId,
   });
 
-  return deletedFacebookCampaign._data.id;
+  return deletedFacebookCampaign;
 };
 
 export const getAllCampaignsHandler = async ({

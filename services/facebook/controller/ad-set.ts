@@ -92,14 +92,9 @@ export const deleteAdSetHandler = async ({ adSetId, facebookAccessToken }) => {
     facebookAccessToken,
   });
 
-  const deletedLocalAdSet = await deleteLocalFacebookAdSet({
+  await deleteLocalFacebookAdSet({
     facebookAdSetId: adSetId,
   });
 
-  const combinedData = {
-    deletedFacebookAdSet,
-    deletedLocalAdSet,
-  };
-
-  return combinedData;
+  return deletedFacebookAdSet;
 };

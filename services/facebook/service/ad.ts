@@ -62,3 +62,13 @@ export const updateFacebookAd = async ({
 
   return updateResult;
 };
+
+export const deleteFacebookAd = async ({ adId, facebookAccessToken }) => {
+  FacebookAdsApi.init(facebookAccessToken!);
+
+  const ad = new Ad(adId, FacebookAdsApi.init(facebookAccessToken!));
+
+  const deleteResult = await ad.delete(adId);
+
+  return deleteResult;
+};

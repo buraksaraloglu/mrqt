@@ -1,11 +1,13 @@
 import {
   createLocalFacebookAd,
+  deleteLocalFacebookAd,
   getLocalFacebookAd,
   updateLocalFacebookAd,
 } from "../model/ad";
 import { updateLocalFacebookAdSet } from "../model/ad-set";
 import {
   createFacebookAd,
+  deleteFacebookAd,
   getFacebookAd,
   updateFacebookAd,
 } from "../service/ad";
@@ -85,4 +87,17 @@ export const updateAdHandler = async ({
   };
 
   return combinedData;
+};
+
+export const deleteAdHandler = async ({ adId, facebookAccessToken }) => {
+  const deletedFacebookAd = await deleteFacebookAd({
+    adId,
+    facebookAccessToken,
+  });
+
+  await deleteLocalFacebookAd({
+    facebookAdId: adId,
+  });
+
+  return deletedFacebookAd;
 };

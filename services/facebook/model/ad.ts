@@ -61,3 +61,15 @@ export const updateLocalFacebookAd = async ({
     data: updatedFields,
   });
 };
+
+export const deleteLocalFacebookAd = async ({
+  facebookAdId,
+}: {
+  facebookAdId: string;
+}) => {
+  return prisma.facebookAd.delete({
+    where: {
+      id: facebookAdId,
+    },
+  });
+};
