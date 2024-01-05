@@ -100,8 +100,6 @@ model FacebookAd {
   id              String        @id @default(cuid())
   name            String
   status          String
-  adSetId         String
-  adId            String        @unique
   facebookAdSet   FacebookAdSet @relation(fields: [facebookAdSetId], references: [id], onDelete: Cascade)
   facebookAdSetId String
   creative        Json

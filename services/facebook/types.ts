@@ -1,5 +1,24 @@
 import { Prisma } from "@prisma/client";
-import { AdSet } from "facebook-nodejs-business-sdk";
+
+export interface FacebookTarget {
+  age_max: number;
+  age_min: number;
+  genders: number[];
+  geo_locations: {
+    countries: string[];
+  };
+}
+
+export interface FacebookCreative {
+  name: string;
+  object_story_spec: {
+    page_id: string;
+    link_data: {
+      link: string;
+      message: string;
+    };
+  };
+}
 
 export interface FacebookCampaignParams {
   name: string;
@@ -26,17 +45,8 @@ export interface FacebookAdSetParams {
 export interface FacebookAdParams {
   name: string;
   status: string;
-  creative: Prisma.JsonValue[];
+  creative: FacebookCreative[];
   adset_id: string;
-}
-
-export interface FacebookTarget {
-  age_max: number;
-  age_min: number;
-  genders: number[];
-  geo_locations: {
-    countries: string[];
-  };
 }
 
 export interface AdAccount {
@@ -110,6 +120,34 @@ type UpdatedAdSetFields = {
 export type UpdateFacebookAdSetParams = {
   adSetId?: string;
   updatedFields: UpdatedAdSetFields;
+  adAccountId?: string;
+  facebookAccessToken?: string;
+};
+
+export type CreateFacebookAdParams = {
+  ad: Record<keyof Omit<FacebookAdParams, "creative">, string> & {
+    creative: FacebookCreative[];
+  };
+  adAccountId: string;
+  facebookAccessToken: string;
+  adSetId: string;
+};
+
+export type GetFacebookAdParams = {
+  adId: string;
+  facebookAccessToken: string;
+  fields?: string[];
+};
+
+type UpdatedAdFields = {
+  name?: string;
+  status?: string;
+  creative?: Prisma.JsonValue[];
+};
+
+export type UpdateFacebookAdParams = {
+  adId?: string;
+  updatedFields: UpdatedAdFields;
   adAccountId?: string;
   facebookAccessToken?: string;
 };

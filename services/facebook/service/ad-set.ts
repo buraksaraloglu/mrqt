@@ -1,9 +1,4 @@
-import {
-  AdAccount,
-  AdSet,
-  Campaign,
-  FacebookAdsApi,
-} from "facebook-nodejs-business-sdk";
+import { AdAccount, AdSet, FacebookAdsApi } from "facebook-nodejs-business-sdk";
 
 import {
   CreateFacebookAdSetParams,
