@@ -2,7 +2,11 @@ import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/db";
 
-import { CreateFacebookAdParams, FacebookAdParams } from "../types";
+import {
+  CreateFacebookAdParams,
+  FacebookAdParams,
+  UpdateFacebookAdParams,
+} from "../types";
 
 export const createLocalFacebookAd = async ({
   ad,
@@ -44,4 +48,16 @@ export const getLocalFacebookAd = async ({
   }
 
   return localAd;
+};
+
+export const updateLocalFacebookAd = async ({
+  adId,
+  updatedFields,
+}: UpdateFacebookAdParams & { adId: string }) => {
+  return prisma.facebookAd.update({
+    where: {
+      id: adId,
+    },
+    data: updatedFields,
+  });
 };

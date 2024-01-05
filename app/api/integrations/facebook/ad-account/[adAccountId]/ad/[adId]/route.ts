@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getFacebookToken } from "@/services/facebook";
-import { getFacebookAdHandler } from "@/services/facebook/controller/ad";
+import {
+  getFacebookAdHandler,
+  updateAdHandler,
+} from "@/services/facebook/controller/ad";
 
 import { requireUser } from "@/lib/auth";
 
@@ -20,4 +23,24 @@ export async function GET(req: Request, ctx: { params: { adId: string } }) {
   });
 
   return NextResponse.json({ data: facebookAdData });
+}
+
+export async function PUT(req: Request, ctx: { params: { adId: string } }) {
+  const body = await req.json();
+  const user = await requireUser();
+  const facebookAccessToken = await getFacebookToken(user.id);
+
+  if (!facebookAccessToken) {
+    return NextResponse.json({ data: null }, { status: 401 });
+  }
+
+  const facebookAdId = ctx.params.adId;
+
+  const updatedAdData = await updateAdHandler({
+    adId: facebookAdId,
+    updatedFields: body,
+    facebookAccessToken,
+  });
+
+  return NextResponse.json({ data: updatedAdData });
 }

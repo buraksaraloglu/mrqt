@@ -1,6 +1,15 @@
-import { createLocalFacebookAd, getLocalFacebookAd } from "../model/ad";
-import { createFacebookAd, getFacebookAd } from "../service/ad";
-import { CreateFacebookAdParams, FacebookAdParams } from "../types";
+import {
+  createLocalFacebookAd,
+  getLocalFacebookAd,
+  updateLocalFacebookAd,
+} from "../model/ad";
+import { updateLocalFacebookAdSet } from "../model/ad-set";
+import {
+  createFacebookAd,
+  getFacebookAd,
+  updateFacebookAd,
+} from "../service/ad";
+import { UpdateFacebookAdParams } from "../types";
 
 type CreateAdHandlerParams = {
   ad: any;
@@ -49,6 +58,30 @@ export const getFacebookAdHandler = async ({
   const combinedData = {
     facebookAd,
     localAd,
+  };
+
+  return combinedData;
+};
+
+export const updateAdHandler = async ({
+  adId,
+  updatedFields,
+  facebookAccessToken,
+}: UpdateFacebookAdParams) => {
+  const localUpdatedAdSet = await updateLocalFacebookAd({
+    adId: adId as string,
+    updatedFields,
+  });
+
+  const updatedFacebookAdSet = await updateFacebookAd({
+    adId,
+    updatedFields,
+    facebookAccessToken,
+  });
+
+  const combinedData = {
+    localUpdatedAdSet,
+    updatedFacebookAdSet,
   };
 
   return combinedData;

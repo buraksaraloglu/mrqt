@@ -1,6 +1,10 @@
 import { Ad, AdAccount, FacebookAdsApi } from "facebook-nodejs-business-sdk";
 
-import { CreateFacebookAdParams, GetFacebookAdParams } from "../types";
+import {
+  CreateFacebookAdParams,
+  GetFacebookAdParams,
+  UpdateFacebookAdParams,
+} from "../types";
 
 export const createFacebookAd = async ({
   ad,
@@ -39,4 +43,22 @@ export const getFacebookAd = async ({
   }
 
   return ad._data;
+};
+
+export const updateFacebookAd = async ({
+  adId,
+  updatedFields,
+  facebookAccessToken,
+}: UpdateFacebookAdParams) => {
+  FacebookAdsApi.init(facebookAccessToken!);
+
+  const ad = new Ad(adId, FacebookAdsApi.init(facebookAccessToken!));
+
+  const { ...restFields } = updatedFields;
+
+  const updateResult = await ad.update(Object.keys(updatedFields), {
+    ...restFields,
+  });
+
+  return updateResult;
 };
