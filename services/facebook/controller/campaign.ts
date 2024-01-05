@@ -24,6 +24,7 @@ type CreateCampaignHandlerParams = {
 type GetCampaignHandlerParams = {
   campaignId: string;
   facebookAccessToken: string;
+  fields?: string[];
 };
 
 export const createCampaignHandler = async ({
@@ -45,10 +46,12 @@ export const createCampaignHandler = async ({
 export const getFacebookCampaignHandler = async ({
   campaignId,
   facebookAccessToken,
+  fields,
 }: GetCampaignHandlerParams) => {
   const facebookCampaign = await getFacebookCampaign({
     campaignId,
     facebookAccessToken,
+    fields,
   });
 
   const localCampaign = await getLocalFacebookCampaign({
@@ -96,16 +99,11 @@ export const deleteCampaignHandler = async ({
     facebookAccessToken,
   });
 
-  const deletedLocalCampaign = await deleteLocalFacebookCampaign({
+  await deleteLocalFacebookCampaign({
     facebookCampaignId: campaignId,
   });
 
-  const combinedData = {
-    deletedFacebookCampaign,
-    deletedLocalCampaign,
-  };
-
-  return combinedData;
+  return deletedFacebookCampaign._data.id;
 };
 
 export const getAllCampaignsHandler = async ({

@@ -34,12 +34,11 @@ export const createFacebookCampaign = async ({
 export const getFacebookCampaign = async ({
   campaignId,
   facebookAccessToken,
+  fields,
 }: GetFacebookCampaignParams) => {
   FacebookAdsApi.init(facebookAccessToken!);
 
-  const fields = ["id", "name", "objective", "daily_budget"];
-
-  const campaign = await new Campaign(campaignId).get(fields);
+  const campaign = await new Campaign(campaignId).get(fields as string[]);
 
   if (!campaign || !campaign._data) {
     console.error("Error fetching Facebook campaign:", campaign);
@@ -60,18 +59,21 @@ export const updateFacebookCampaign = async ({
     campaignId,
     FacebookAdsApi.init(facebookAccessToken!),
   );
+
+  const {
+    buyingType,
+    dailyBudget,
+    specialAdCategories,
+    startTime,
+    ...restFields
+  } = updatedFields;
+
   const updateResult = campaign.update(Object.keys(updatedFields), {
-    ...updatedFields,
-    ...(updatedFields.buyingType && {
-      [Campaign.Fields.buying_type]: updatedFields.buyingType,
-    }),
-    ...(updatedFields.specialAdCategories && {
-      [Campaign.Fields.special_ad_categories]:
-        updatedFields.specialAdCategories,
-    }),
-    ...(updatedFields.dailyBudget && {
-      [Campaign.Fields.daily_budget]: updatedFields.dailyBudget,
-    }),
+    ...restFields,
+    [Campaign.Fields.buying_type]: buyingType,
+    [Campaign.Fields.daily_budget]: dailyBudget,
+    [Campaign.Fields.special_ad_categories]: specialAdCategories,
+    [Campaign.Fields.start_time]: startTime,
   });
 
   return updateResult;
@@ -96,13 +98,16 @@ export const deleteFacebookCampaign = async ({
 export const getAllFacebookCampaigns = async ({
   facebookAccessToken,
   adAccountId,
+  fields,
+}: {
+  facebookAccessToken: string;
+  adAccountId: string;
+  fields?: string[];
 }) => {
   FacebookAdsApi.init(facebookAccessToken!);
 
-  const fields = ["id", "name", "objective", "daily_budget"];
-
   const adAccount = new AdAccount(adAccountId);
-  const campaigns = await adAccount.getCampaigns(fields);
+  const campaigns = await adAccount.getCampaigns(fields as string[]);
 
   if (!campaigns || !campaigns.length) {
     console.error("No Facebook campaigns found.");

@@ -85,7 +85,6 @@ model FacebookAdSet {
   targeting    Json
   billingEvent String
   bidAmount    Float
-  adSetId      String
 
   facebookCampaign   FacebookCampaign? @relation(fields: [facebookCampaignId], references: [id], onDelete: Cascade)
   facebookCampaignId String?
