@@ -1,12 +1,29 @@
-import { createLocalFacebookCampaign } from "../model/campaign";
-import { createFacebookCampaign } from "../service/campaign";
-import { FacebookCampaignParams } from "../types";
+import {
+  createLocalFacebookCampaign,
+  deleteLocalFacebookCampaign,
+  getAllLocalCampaigns,
+  getLocalFacebookCampaign,
+  updateLocalFacebookCampaign,
+} from "../model/campaign";
+import {
+  createFacebookCampaign,
+  deleteFacebookCampaign,
+  getAllFacebookCampaigns,
+  getFacebookCampaign,
+  updateFacebookCampaign,
+} from "../service/campaign";
+import { FacebookCampaignParams, UpdateFacebookCampaignParams } from "../types";
 
 type CreateCampaignHandlerParams = {
   campaign: FacebookCampaignParams;
   facebookAccessToken: string;
   adAccountId: string;
   userId: string;
+};
+
+type GetCampaignHandlerParams = {
+  campaignId: string;
+  facebookAccessToken: string;
 };
 
 export const createCampaignHandler = async ({
@@ -25,29 +42,87 @@ export const createCampaignHandler = async ({
   return localCampaign;
 };
 
-// export const getCampaignHandler = async (
-//   req: Request,
-//   res: Response,
-//   isNestedCall: boolean = false,
-// ) => {
-//   try {
-//     const { campaign_ids } = req.body;
+export const getFacebookCampaignHandler = async ({
+  campaignId,
+  facebookAccessToken,
+}: GetCampaignHandlerParams) => {
+  const facebookCampaign = await getFacebookCampaign({
+    campaignId,
+    facebookAccessToken,
+  });
 
-//     const dbCampaign = campaign_ids
-//       ? await prisma.campaign.findMany({
-//           where: { campaign_id: { in: campaign_ids } },
-//         })
-//       : [];
+  const localCampaign = await getLocalFacebookCampaign({
+    facebookCampaignId: facebookCampaign.id,
+  });
 
-//     const fbCampaign = campaign_ids ? await getCampaign(campaign_ids) : [];
+  const combinedData = {
+    facebookCampaign,
+    localCampaign,
+  };
 
-//     if (isNestedCall) {
-//       return { dbCampaign, fbCampaign };
-//     } else {
-//       res.json({ dbCampaign, fbCampaign });
-//     }
-//   } catch (error) {
-//     console.error("Error fetching campaign data:", error);
-//     next(error);
-//   }
-// };
+  return combinedData;
+};
+
+export const updateCampaignHandler = async ({
+  campaignId,
+  updatedFields,
+  facebookAccessToken,
+}: UpdateFacebookCampaignParams) => {
+  const localUpdatedCampaign = await updateLocalFacebookCampaign({
+    campaignId: campaignId as string,
+    updatedFields,
+  });
+
+  const updatedFacebookCampaign = await updateFacebookCampaign({
+    campaignId: campaignId,
+    updatedFields,
+    facebookAccessToken,
+  });
+
+  const combinedData = {
+    localUpdatedCampaign,
+    updatedFacebookCampaign,
+  };
+
+  return combinedData;
+};
+
+export const deleteCampaignHandler = async ({
+  campaignId,
+  facebookAccessToken,
+}) => {
+  const deletedFacebookCampaign = await deleteFacebookCampaign({
+    campaignId,
+    facebookAccessToken,
+  });
+
+  const deletedLocalCampaign = await deleteLocalFacebookCampaign({
+    facebookCampaignId: campaignId,
+  });
+
+  const combinedData = {
+    deletedFacebookCampaign,
+    deletedLocalCampaign,
+  };
+
+  return combinedData;
+};
+
+export const getAllCampaignsHandler = async ({
+  facebookAccessToken,
+  adAccountId,
+}) => {
+  const facebookCampaigns = await getAllFacebookCampaigns({
+    facebookAccessToken,
+    adAccountId,
+  });
+
+  const localCampaigns = await getAllLocalCampaigns(adAccountId);
+
+  const combinedData = {
+    facebookCampaigns,
+    localCampaigns,
+  };
+
+  return combinedData;
+};

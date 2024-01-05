@@ -49,3 +49,28 @@ export type CreateFacebookCampaignParams = {
   facebookAccessToken: string;
   userId: string;
 };
+
+export type GetFacebookCampaignParams = {
+  campaignId: string;
+  facebookAccessToken: string;
+};
+
+type UpdatedFields = {
+  name?: string;
+  status?: string;
+  buyingType?: string;
+  objective?: string;
+  specialAdCategories?: string;
+  start_time?: string;
+  end_time?: string;
+  dailyBudget?: number;
+  target?: Prisma.JsonValue[];
+  campaign_type?: string;
+};
+
+export type UpdateFacebookCampaignParams = {
+  campaignId?: string;
+  updatedFields: UpdatedFields;
+  adAccountId?: string;
+  facebookAccessToken?: string;
+};
