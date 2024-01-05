@@ -27,3 +27,21 @@ export const createLocalFacebookAd = async ({
 
   return localAd;
 };
+
+export const getLocalFacebookAd = async ({
+  facebookAdId,
+}: {
+  facebookAdId: string;
+}) => {
+  const localAd = await prisma.facebookAd.findUnique({
+    where: {
+      id: facebookAdId,
+    },
+  });
+
+  if (!localAd) {
+    throw new Error(`Local Facebook Ad not found with id: ${facebookAdId}`);
+  }
+
+  return localAd;
+};
