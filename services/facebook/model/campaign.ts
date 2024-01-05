@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/db";
 
-import { CreateFacebookCampaignParams } from "../types";
+import {
+  CreateFacebookCampaignParams,
+  UpdateFacebookCampaignParams,
+} from "../types";
 
 export const createLocalFacebookCampaign = async ({
   campaign,
@@ -41,6 +44,18 @@ export const getLocalFacebookCampaign = async ({
   });
 
   return localCampaign;
+};
+
+export const updateLocalFacebookCampaign = async ({
+  campaignId,
+  updatedFields,
+}: UpdateFacebookCampaignParams & { campaignId: string }) => {
+  return prisma.facebookCampaign.update({
+    where: {
+      id: campaignId,
+    },
+    data: updatedFields,
+  });
 };
 
 export const getAllLocalCampaigns = async ({

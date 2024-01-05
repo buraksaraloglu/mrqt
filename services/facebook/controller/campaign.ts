@@ -2,13 +2,15 @@ import {
   createLocalFacebookCampaign,
   getAllLocalCampaigns,
   getLocalFacebookCampaign,
+  updateLocalFacebookCampaign,
 } from "../model/campaign";
 import {
   createFacebookCampaign,
   getAllFacebookCampaigns,
   getFacebookCampaign,
+  updateFacebookCampaign,
 } from "../service/campaign";
-import { FacebookCampaignParams } from "../types";
+import { FacebookCampaignParams, UpdateFacebookCampaignParams } from "../types";
 
 type CreateCampaignHandlerParams = {
   campaign: FacebookCampaignParams;
@@ -54,6 +56,30 @@ export const getFacebookCampaignHandler = async ({
   const combinedData = {
     facebookCampaign,
     localCampaign,
+  };
+
+  return combinedData;
+};
+
+export const updateCampaignHandler = async ({
+  campaignId,
+  updatedFields,
+  facebookAccessToken,
+}: UpdateFacebookCampaignParams) => {
+  const localUpdatedCampaign = await updateLocalFacebookCampaign({
+    campaignId: campaignId as string,
+    updatedFields,
+  });
+
+  const updatedFacebookCampaign = await updateFacebookCampaign({
+    campaignId: campaignId,
+    updatedFields,
+    facebookAccessToken,
+  });
+
+  const combinedData = {
+    localUpdatedCampaign,
+    updatedFacebookCampaign,
   };
 
   return combinedData;

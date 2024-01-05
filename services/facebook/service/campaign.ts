@@ -4,11 +4,10 @@ import {
   FacebookAdsApi,
 } from "facebook-nodejs-business-sdk";
 
-import { prisma } from "@/lib/db";
-
 import {
   CreateFacebookCampaignParams,
   GetFacebookCampaignParams,
+  UpdateFacebookCampaignParams,
 } from "../types";
 
 export const createFacebookCampaign = async ({
@@ -48,6 +47,34 @@ export const getFacebookCampaign = async ({
   }
 
   return campaign._data;
+};
+
+export const updateFacebookCampaign = async ({
+  campaignId,
+  updatedFields,
+  facebookAccessToken,
+}: UpdateFacebookCampaignParams) => {
+  FacebookAdsApi.init(facebookAccessToken!);
+
+  const campaign = new Campaign(
+    campaignId,
+    FacebookAdsApi.init(facebookAccessToken!),
+  );
+  const updateResult = campaign.update(Object.keys(updatedFields), {
+    ...updatedFields,
+    ...(updatedFields.buyingType && {
+      [Campaign.Fields.buying_type]: updatedFields.buyingType,
+    }),
+    ...(updatedFields.specialAdCategories && {
+      [Campaign.Fields.special_ad_categories]:
+        updatedFields.specialAdCategories,
+    }),
+    ...(updatedFields.dailyBudget && {
+      [Campaign.Fields.daily_budget]: updatedFields.dailyBudget,
+    }),
+  });
+
+  return updateResult;
 };
 
 export const getAllFacebookCampaigns = async ({
