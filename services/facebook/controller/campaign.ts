@@ -1,11 +1,13 @@
 import {
   createLocalFacebookCampaign,
+  deleteLocalFacebookCampaign,
   getAllLocalCampaigns,
   getLocalFacebookCampaign,
   updateLocalFacebookCampaign,
 } from "../model/campaign";
 import {
   createFacebookCampaign,
+  deleteFacebookCampaign,
   getAllFacebookCampaigns,
   getFacebookCampaign,
   updateFacebookCampaign,
@@ -80,6 +82,27 @@ export const updateCampaignHandler = async ({
   const combinedData = {
     localUpdatedCampaign,
     updatedFacebookCampaign,
+  };
+
+  return combinedData;
+};
+
+export const deleteCampaignHandler = async ({
+  campaignId,
+  facebookAccessToken,
+}) => {
+  const deletedFacebookCampaign = await deleteFacebookCampaign({
+    campaignId,
+    facebookAccessToken,
+  });
+
+  const deletedLocalCampaign = await deleteLocalFacebookCampaign({
+    facebookCampaignId: campaignId,
+  });
+
+  const combinedData = {
+    deletedFacebookCampaign,
+    deletedLocalCampaign,
   };
 
   return combinedData;

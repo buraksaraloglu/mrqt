@@ -77,6 +77,22 @@ export const updateFacebookCampaign = async ({
   return updateResult;
 };
 
+export const deleteFacebookCampaign = async ({
+  campaignId,
+  facebookAccessToken,
+}) => {
+  FacebookAdsApi.init(facebookAccessToken!);
+
+  const campaign = new Campaign(
+    campaignId,
+    FacebookAdsApi.init(facebookAccessToken!),
+  );
+
+  const deleteResult = await campaign.delete(campaignId);
+
+  return deleteResult;
+};
+
 export const getAllFacebookCampaigns = async ({
   facebookAccessToken,
   adAccountId,

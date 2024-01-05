@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getFacebookToken } from "@/services/facebook";
 import {
+  deleteCampaignHandler,
   getFacebookCampaignHandler,
   updateCampaignHandler,
 } from "@/services/facebook/controller/campaign";
@@ -50,4 +51,25 @@ export async function PUT(
   });
 
   return NextResponse.json({ data: updatedCampaignData });
+}
+
+export async function DELETE(
+  req: Request,
+  ctx: { params: { campaignId: string } },
+) {
+  const user = await requireUser();
+  const facebookAccessToken = await getFacebookToken(user.id);
+
+  if (!facebookAccessToken) {
+    return NextResponse.json({ data: null }, { status: 401 });
+  }
+
+  const facebookCampaignId = ctx.params.campaignId;
+
+  const deletedCampaignData = await deleteCampaignHandler({
+    campaignId: facebookCampaignId,
+    facebookAccessToken,
+  });
+
+  return NextResponse.json({ data: deletedCampaignData });
 }

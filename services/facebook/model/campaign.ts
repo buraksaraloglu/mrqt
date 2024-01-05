@@ -58,6 +58,18 @@ export const updateLocalFacebookCampaign = async ({
   });
 };
 
+export const deleteLocalFacebookCampaign = async ({
+  facebookCampaignId,
+}: {
+  facebookCampaignId: string;
+}) => {
+  return prisma.facebookCampaign.delete({
+    where: {
+      id: facebookCampaignId,
+    },
+  });
+};
+
 export const getAllLocalCampaigns = async ({
   adAccountId,
 }: {
