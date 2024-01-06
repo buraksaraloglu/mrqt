@@ -23,6 +23,18 @@ model User {
   @@map(name: "users")
 }
 
+// This is for shopify. Still trying to figure out
+model ShopifySession {
+  id          String    @id
+  shop        String
+  state       String
+  isOnline    Boolean   @default(false)
+  scope       String?
+  expires     DateTime?
+  accessToken String
+  userId      BigInt?
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique

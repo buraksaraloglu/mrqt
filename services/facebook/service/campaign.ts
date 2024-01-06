@@ -1,6 +1,26 @@
-import { AdAccount, FacebookAdsApi } from "facebook-nodejs-business-sdk";
+import {
+  AdAccount,
+  Campaign,
+  FacebookAdsApi,
+  TargetingGeoLocation,
+  TargetingGeoLocationCity,
+} from "facebook-nodejs-business-sdk";
 
 import { CreateFacebookCampaignParams } from "../types";
+
+export const fbPlayground = async (
+  searchQuery: string,
+  facebookAccessToken,
+) => {
+  const geoLocation = new TargetingGeoLocation(
+    null,
+    FacebookAdsApi.init(facebookAccessToken!),
+  );
+
+  console.log({ cityKey: facebookAccessToken });
+
+  return null;
+};
 
 export const createFacebookCampaign = async ({
   campaign,

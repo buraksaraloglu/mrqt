@@ -1,17 +1,31 @@
 import { redirect } from "next/navigation";
 import { User } from "@clerk/backend";
-import { clerkClient, currentUser } from "@clerk/nextjs";
+import { clerkClient, currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { format, isAfter, isBefore, parseISO } from "date-fns";
 
 import { prisma } from "./db";
 
-export async function requireUser() {
+export async function requireUser({
+  returnBackUrl = "/",
+}:
+  | {
+      returnBackUrl?: string;
+    }
+  | undefined = {}) {
   const user = await currentUser();
 
   if (!user) {
-    throw redirect("/sign-in");
+    throw redirectToSignIn({ returnBackUrl });
   }
 
-  if (!user.privateMetadata?.localSyncedAt) {
+  if (
+    !user.privateMetadata?.localSyncedAt ||
+    isBefore(
+      parseISO(user.privateMetadata.localSyncedAt as string),
+      new Date().setDate(new Date().getDate() - 1),
+    )
+  ) {
+    console.log("syncing user");
     await initUser(user);
   }
 

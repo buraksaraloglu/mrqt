@@ -14,6 +14,9 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
     FACEBOOK_CLIENT_ID: z.string().min(1),
     FACEBOOK_CLIENT_SECRET: z.string().min(1),
+    SHOPIFY_API_KEY: z.string().min(1),
+    SHOPIFY_API_SECRET: z.string().min(1),
+    OKBRK_API_SALT: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -43,5 +46,8 @@ export const env = createEnv({
 
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
     FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
+    SHOPIFY_API_KEY: process.env.SHOPIFY_API_KEY,
+    SHOPIFY_API_SECRET: process.env.SHOPIFY_API_SECRET,
+    OKBRK_API_SALT: process.env.OKBRK_API_SALT,
   },
 });
